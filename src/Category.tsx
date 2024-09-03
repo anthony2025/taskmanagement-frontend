@@ -14,10 +14,14 @@ const style: CSSProperties = {
   float: 'left',
 }
 
-export const Category: FC = () => {
+export interface CategoryProps {
+  name: string
+}
+
+export const Category: FC<CategoryProps> = function Category({ name }) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'task',
-    drop: () => ({ name: 'Category' }),
+    drop: () => ({ name }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -34,7 +38,7 @@ export const Category: FC = () => {
 
   return (
     <div ref={drop} style={{ ...style, backgroundColor }}>
-      {isActive ? 'Release to drop' : 'Drag a box here'}
+      {isActive ? 'Release to drop' : name}
     </div>
   )
 }

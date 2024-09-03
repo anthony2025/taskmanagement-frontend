@@ -26,7 +26,7 @@ export const Task: FC<TaskProps> = function Task({ name }) {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>()
       if (item && dropResult) {
-        alert(`You dropped ${item.name} into ${dropResult.name}!`)
+        console.log(`You dropped ${item.name} into ${dropResult.name}!`)
       }
     },
     collect: (monitor) => ({

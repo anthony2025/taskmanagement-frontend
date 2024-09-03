@@ -8,12 +8,16 @@ export const Container: FC = memo(function Container() {
   return (
     <div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Category />
+        <Category name="Inbox" />
+        <Category name="Work" />
+        <Category name="Study" />
       </div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Task name="Glass" />
-        <Task name="Banana" />
-        <Task name="Paper" />
+        <Task name="Take out the garbage" />
+        <Task name="Read a book" />
+        <Task name="Cook lunch" />
+        <Task name="Find a date" />
+        <Task name="Finish report" />
       </div>
     </div>
   )
