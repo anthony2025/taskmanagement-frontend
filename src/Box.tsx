@@ -1,5 +1,4 @@
 import type { CSSProperties, FC } from 'react'
-import { memo } from 'react'
 import { useDrag } from 'react-dnd'
 
 const style: CSSProperties = {
@@ -14,26 +13,33 @@ const style: CSSProperties = {
 
 export interface BoxProps {
   name: string
-  type: string
-  isDropped: boolean
 }
 
-export const Box: FC<BoxProps> = memo(function Box({ name, type, isDropped }) {
-  const [{ opacity }, drag] = useDrag(
-    () => ({
-      type,
-      item: { name },
-      collect: (monitor) => ({
-        opacity: monitor.isDragging() ? 0.4 : 1,
-      }),
-    }),
-    [name, type],
-  )
+interface DropResult {
+  name: string
+}
 
+export const Box: FC<BoxProps> = function Box({ name }) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'task',
+    item: { name },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult<DropResult>()
+      if (item && dropResult) {
+        alert(`You dropped ${item.name} into ${dropResult.name}!`)
+      }
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
+    }),
+  }))
+
+  const opacity = isDragging ? 0.4 : 1
   return (
-    <div ref={drag} style={{ ...style, opacity }} data-testid="box">
-      {isDropped ? <s>{name}</s> : name}
+    <div ref={drag} style={{ ...style, opacity }} data-testid={`box`}>
+      {name}
     </div>
   )
-})
+}
 

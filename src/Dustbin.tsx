@@ -1,5 +1,4 @@
 import type { CSSProperties, FC } from 'react'
-import { memo } from 'react'
 import { useDrop } from 'react-dnd'
 
 const style: CSSProperties = {
@@ -15,27 +14,17 @@ const style: CSSProperties = {
   float: 'left',
 }
 
-export interface DustbinProps {
-  accept: string[]
-  lastDroppedItem?: any
-  onDrop: (item: any) => void
-}
-
-export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
-  accept,
-  lastDroppedItem,
-  onDrop,
-}) {
-  const [{ isOver, canDrop }, drop] = useDrop({
-    accept,
-    drop: onDrop,
+export const Dustbin: FC = () => {
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: 'task',
+    drop: () => ({ name: 'Dustbin' }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
-  })
+  }))
 
-  const isActive = isOver && canDrop
+  const isActive = canDrop && isOver
   let backgroundColor = '#222'
   if (isActive) {
     backgroundColor = 'darkgreen'
@@ -45,14 +34,8 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
 
   return (
     <div ref={drop} style={{ ...style, backgroundColor }} data-testid="dustbin">
-      {isActive
-        ? 'Release to drop'
-        : `This dustbin accepts: ${accept.join(', ')}`}
-
-      {lastDroppedItem && (
-        <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
-      )}
+      {isActive ? 'Release to drop' : 'Drag a box here'}
     </div>
   )
-})
+}
 
