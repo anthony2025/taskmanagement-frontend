@@ -26,6 +26,7 @@ const Task: FC<TaskProps> = function Task({ name }) {
   }))
 
   const opacity = isDragging ? 0.4 : 1
+
   return (
     <div ref={drag} className='task' style={{ opacity }} data-testid={`box`}>
       {name}
