@@ -1,19 +1,19 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { Box } from './Box'
-import { Dustbin } from './Dustbin'
+import { Task } from './Task'
+import { Category } from './Category'
 
 export const Container: FC = memo(function Container() {
   return (
     <div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Dustbin />
+        <Category />
       </div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Box name="Glass" />
-        <Box name="Banana" />
-        <Box name="Paper" />
+        <Task name="Glass" />
+        <Task name="Banana" />
+        <Task name="Paper" />
       </div>
     </div>
   )

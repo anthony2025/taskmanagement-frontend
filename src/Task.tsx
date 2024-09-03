@@ -11,7 +11,7 @@ const style: CSSProperties = {
   float: 'left',
 }
 
-export interface BoxProps {
+export interface TaskProps {
   name: string
 }
 
@@ -19,7 +19,7 @@ interface DropResult {
   name: string
 }
 
-export const Box: FC<BoxProps> = function Box({ name }) {
+export const Task: FC<TaskProps> = function Task({ name }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'task',
     item: { name },

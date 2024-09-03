@@ -14,10 +14,10 @@ const style: CSSProperties = {
   float: 'left',
 }
 
-export const Dustbin: FC = () => {
+export const Category: FC = () => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'task',
-    drop: () => ({ name: 'Dustbin' }),
+    drop: () => ({ name: 'Category' }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -33,7 +33,7 @@ export const Dustbin: FC = () => {
   }
 
   return (
-    <div ref={drop} style={{ ...style, backgroundColor }} data-testid="dustbin">
+    <div ref={drop} style={{ ...style, backgroundColor }}>
       {isActive ? 'Release to drop' : 'Drag a box here'}
     </div>
   )
