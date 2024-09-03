@@ -1,10 +1,10 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { Task } from './Task'
-import { Category } from './Category'
+import Task from './Task'
+import Category from './Category'
 
-export const Container: FC = memo(function Container() {
+const Container: FC = memo(function Container() {
   return (
     <div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>

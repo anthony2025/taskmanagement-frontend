@@ -1,24 +1,11 @@
-import type { CSSProperties, FC } from 'react'
+import type { FC } from 'react'
 import { useDrop } from 'react-dnd'
-
-const style: CSSProperties = {
-  height: '12rem',
-  width: '12rem',
-  marginRight: '1.5rem',
-  marginBottom: '1.5rem',
-  color: 'white',
-  padding: '1rem',
-  textAlign: 'center',
-  fontSize: '1rem',
-  lineHeight: 'normal',
-  float: 'left',
-}
 
 export interface CategoryProps {
   name: string
 }
 
-export const Category: FC<CategoryProps> = function Category({ name }) {
+const Category: FC<CategoryProps> = function Category({ name }) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'task',
     drop: () => ({ name }),
@@ -37,9 +24,10 @@ export const Category: FC<CategoryProps> = function Category({ name }) {
   }
 
   return (
-    <div ref={drop} style={{ ...style, backgroundColor }}>
+    <div ref={drop} className="category" style={{ backgroundColor }}>
       {isActive ? 'Release to drop' : name}
     </div>
   )
 }
 
+export default Category
