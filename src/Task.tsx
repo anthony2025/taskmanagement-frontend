@@ -1,23 +1,30 @@
 import type { FC } from 'react'
 import { useDrag } from 'react-dnd'
 
+import type { MoveTask, ContainerState } from './Container'
+
 export type TaskProps = {
   name: string,
-  setState: Function,
+  category: keyof ContainerState,
+  moveTask: MoveTask,
 }
 
 type DropResult = {
-  name: string
+  name: keyof ContainerState
 }
 
-const Task: FC<TaskProps> = function Task({ name }) {
+const Task: FC<TaskProps> = function Task({ name, category, moveTask }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'task',
     item: { name },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>()
       if (item && dropResult) {
-        console.log(`You dropped ${item.name} into ${dropResult.name}!`)
+        const task = item.name
+        const origin = category
+        const destination = dropResult.name
+        console.log(`You dropped ${task} into ${destination}!`)
+        moveTask(name, origin, destination)
       }
     },
     collect: (monitor) => ({

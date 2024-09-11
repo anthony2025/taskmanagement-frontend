@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import type { FC } from 'react'
-import Task from './Task'
+import { useState } from 'react'
+import { keys } from 'ramda'
+
 import Category from './Category'
 
 export type ContainerState = {
-  inbox: Array<string>,
-  work: Array<string>,
-  study: Array<string>,
+  inbox: string[],
+  work: string[],
+  study: string[],
 }
 
 const initialState: ContainerState = {
@@ -21,18 +22,35 @@ const initialState: ContainerState = {
   study: [],
 }
 
+export type MoveTask = (taskName: string, category: keyof ContainerState, destination: keyof ContainerState) => void
+
 const Container: FC = function Container() {
   const [state, setState] = useState<ContainerState>(initialState)
+
+  const moveTask: MoveTask = (taskName, origin, destination) => {
+    setState(function(previousState: ContainerState): ContainerState {
+      const newState = {
+        ...previousState,
+        [origin]: previousState[origin].filter(task => task === taskName),
+        [destination]: previousState[destination].concat(taskName)
+      }
+      console.log('oldState', previousState)
+      console.log('newState', newState)
+      return newState
+    })
+  }
+
+
   return (
     <div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        {Object.keys(state).map(category =>
-          <Category name={category} />
-        )}
-      </div>
-      <div style={{ overflow: 'hidden', clear: 'both' }}>
-        {state.inbox.map(task =>
-          <Task name={task} setState={setState} />
+        {keys(state).map(category =>
+          <Category
+            name={category}
+            key={category}
+            tasks={state[category]}
+            moveTask={moveTask}
+          />
         )}
       </div>
     </div>
