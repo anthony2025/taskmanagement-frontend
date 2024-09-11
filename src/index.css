@@ -28,7 +28,7 @@ code {
   border: 1px dashed gray;
   background-color: white;
   padding: 0.5rem 1rem;
-  margin: 1.5rem;
+  margin: .5rem;
   cursor: move;
   float: left;
 }

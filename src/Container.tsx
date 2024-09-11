@@ -29,12 +29,12 @@ const Container: FC = function Container() {
 
   const moveTask: MoveTask = (taskName, origin, destination) => {
     setState(function(previousState: ContainerState): ContainerState {
+      console.log('previousState', previousState)
       const newState = {
         ...previousState,
-        [origin]: previousState[origin].filter(task => task === taskName),
+        [origin]: previousState[origin].filter(task => task !== taskName),
         [destination]: previousState[destination].concat(taskName)
       }
-      console.log('oldState', previousState)
       console.log('newState', newState)
       return newState
     })
