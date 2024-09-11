@@ -1,11 +1,12 @@
 import type { FC } from 'react'
 import { useDrag } from 'react-dnd'
 
-export interface TaskProps {
-  name: string
+export type TaskProps = {
+  name: string,
+  setState: Function,
 }
 
-interface DropResult {
+type DropResult = {
   name: string
 }
 

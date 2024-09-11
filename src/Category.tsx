@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useDrop } from 'react-dnd'
 
-export interface CategoryProps {
+export type CategoryProps = {
   name: string
 }
 

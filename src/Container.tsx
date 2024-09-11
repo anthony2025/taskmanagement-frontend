@@ -1,26 +1,42 @@
+import { useState } from 'react'
 import type { FC } from 'react'
-import { memo } from 'react'
-
 import Task from './Task'
 import Category from './Category'
 
-const Container: FC = memo(function Container() {
+export type ContainerState = {
+  inbox: Array<string>,
+  work: Array<string>,
+  study: Array<string>,
+}
+
+const initialState: ContainerState = {
+  inbox: [
+    "Take out the garbage",
+    "Read a book",
+    "Cook lunch",
+    "Find a date",
+    "Finish report",
+  ],
+  work: [],
+  study: [],
+}
+
+const Container: FC = function Container() {
+  const [state, setState] = useState<ContainerState>(initialState)
   return (
     <div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Category name="Inbox" />
-        <Category name="Work" />
-        <Category name="Study" />
+        {Object.keys(state).map(category =>
+          <Category name={category} />
+        )}
       </div>
       <div style={{ overflow: 'hidden', clear: 'both' }}>
-        <Task name="Take out the garbage" />
-        <Task name="Read a book" />
-        <Task name="Cook lunch" />
-        <Task name="Find a date" />
-        <Task name="Finish report" />
+        {state.inbox.map(task =>
+          <Task name={task} setState={setState} />
+        )}
       </div>
     </div>
   )
-})
+}
 
 export default Container
