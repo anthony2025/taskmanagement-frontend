@@ -13,11 +13,11 @@ code {
 }
 
 .category {
-  height: 12rem;
+  height: 16rem;
   width: 12rem;
   margin: 1.5rem;
   color: white;
-  padding: 1rem;
+  padding: 2rem;
   text-align: center;
   font-size: 1rem;
   line-height: normal;
@@ -26,8 +26,9 @@ code {
 
 .task {
   border: 1px dashed gray;
-  background-color: white;
-  padding: 0.5rem 1rem;
+  background-color: #ddd;
+  color: black;
+  padding: .5rem;
   margin: .5rem;
   cursor: move;
   float: left;
