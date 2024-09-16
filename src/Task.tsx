@@ -23,8 +23,7 @@ const Task: FC<TaskProps> = ({ name, category, moveTask }) => {
         const task = item.name
         const origin = category
         const destination = dropResult.name
-        console.log(`You dropped ${task} into ${destination}!`)
-        moveTask(name, origin, destination)
+        moveTask(task, origin, destination)
       }
     },
     collect: (monitor) => ({

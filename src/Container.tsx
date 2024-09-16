@@ -30,7 +30,8 @@ const Container: FC = () => {
   const [state, setState] = useState<ContainerState>(initialState)
 
   const moveTask: MoveTask = (taskName, origin, destination) => {
-    setState(function(previousState: ContainerState): ContainerState {
+    setState((previousState: ContainerState): ContainerState => {
+      if (origin === destination) return previousState
       const newState = {
         ...previousState,
         [origin]: previousState[origin].filter(task => task !== taskName),
