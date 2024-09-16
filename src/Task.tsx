@@ -13,7 +13,7 @@ type DropResult = {
   name: keyof ContainerState
 }
 
-const Task: FC<TaskProps> = function Task({ name, category, moveTask }) {
+const Task: FC<TaskProps> = ({ name, category, moveTask }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'task',
     item: { name },
@@ -36,7 +36,12 @@ const Task: FC<TaskProps> = function Task({ name, category, moveTask }) {
   const opacity = isDragging ? 0.4 : 1
 
   return (
-    <div ref={drag} className='task' style={{ opacity }} data-testid={`box`}>
+    <div
+      ref={drag}
+      className='task'
+      style={{ opacity }}
+      data-testid='box'
+    >
       {name}
     </div>
   )

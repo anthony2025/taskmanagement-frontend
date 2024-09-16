@@ -3,12 +3,10 @@ import { useState } from 'react'
 import { keys } from 'ramda'
 
 import Category from './Category'
+import Task from './Task'
 
-export type ContainerState = {
-  inbox: string[],
-  work: string[],
-  study: string[],
-}
+export type Categories = 'inbox' | 'work' | 'study'
+export type ContainerState = Record<Categories, string[]>
 
 const initialState: ContainerState = {
   inbox: [
@@ -22,9 +20,13 @@ const initialState: ContainerState = {
   study: [],
 }
 
-export type MoveTask = (taskName: string, category: keyof ContainerState, destination: keyof ContainerState) => void
+export type MoveTask = (
+    taskName: string,
+    category: keyof ContainerState,
+    destination: keyof ContainerState
+  ) => void
 
-const Container: FC = function Container() {
+const Container: FC = () => {
   const [state, setState] = useState<ContainerState>(initialState)
 
   const moveTask: MoveTask = (taskName, origin, destination) => {
@@ -43,16 +45,19 @@ const Container: FC = function Container() {
 
   return (
     <div>
-      <div style={{ overflow: 'hidden', clear: 'both' }}>
-        {keys(state).map(category =>
-          <Category
-            name={category}
-            key={category}
-            tasks={state[category]}
-            moveTask={moveTask}
-          />
-        )}
-      </div>
+      {keys(state).map(category =>
+        <Category name={category} key={category}>
+          {state[category].map(task =>
+            <Task
+              name={task}
+              category={category}
+              moveTask={moveTask}
+              key={task}
+              data-testid='task'
+            />
+          )}
+        </Category>
+      )}
     </div>
   )
 }

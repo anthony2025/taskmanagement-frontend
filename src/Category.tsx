@@ -1,16 +1,14 @@
-import type { FC } from 'react'
+import type { FC, ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
 
-import type { MoveTask, ContainerState } from './Container'
-import Task from './Task'
+import type { ContainerState } from './Container'
 
 export type CategoryProps = {
   name: keyof ContainerState,
-  tasks: string[],
-  moveTask: MoveTask
+  children: ReactNode,
 }
 
-const Category: FC<CategoryProps> = function Category({ name, tasks, moveTask }) {
+const Category: FC<CategoryProps> = ({ name, children }) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'task',
     drop: () => ({ name }),
@@ -28,12 +26,10 @@ const Category: FC<CategoryProps> = function Category({ name, tasks, moveTask })
       ref={drop}
       className='category'
       style={{ backgroundColor }}
-      data-testid={`category`}
+      data-testid='category'
     >
       {isActive ? 'Release to drop' : name}
-      {tasks.map(task =>
-        <Task name={task} category={name} moveTask={moveTask} key={task} />
-      )}
+      {children}
     </div>
   )
 }
