@@ -23,10 +23,11 @@ code {
   height: 80vh;
   width: 240px;
   margin: 24px;
-  color: white;
+  border-radius: 6px;
   padding: 2rem;
   text-align: center;
   background-color: #004643;
+  color: white;
   font-size: 1rem;
   line-height: normal;
   float: left;
