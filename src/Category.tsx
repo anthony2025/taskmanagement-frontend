@@ -30,7 +30,7 @@ const Category: FC<CategoryProps> = ({ name, children }) => {
       data-testid='category'
     >
       {isActive ? 'Release to drop' : toUpper(name)}
-      <div className='categoriesList'>
+      <div className='taskList'>
         {children}
       </div>
     </div>

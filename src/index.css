@@ -16,12 +16,13 @@ code {
   height: 100vh;
   width: 100%;
   background-color: #faf4d3;
+  display: flex;
 }
 
 .category {
-  height: 16rem;
-  width: 12rem;
-  margin: 1.5rem;
+  height: 80vh;
+  width: 240px;
+  margin: 24px;
   color: white;
   padding: 2rem;
   text-align: center;
@@ -29,6 +30,12 @@ code {
   font-size: 1rem;
   line-height: normal;
   float: left;
+}
+
+.taskList {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .task {
