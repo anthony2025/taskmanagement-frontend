@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
+import { toUpper } from 'ramda'
 
 import type { ContainerState } from './Container'
 
@@ -28,8 +29,10 @@ const Category: FC<CategoryProps> = ({ name, children }) => {
       style={{ backgroundColor }}
       data-testid='category'
     >
-      {isActive ? 'Release to drop' : name}
-      {children}
+      {isActive ? 'Release to drop' : toUpper(name)}
+      <div className='categoriesList'>
+        {children}
+      </div>
     </div>
   )
 }
