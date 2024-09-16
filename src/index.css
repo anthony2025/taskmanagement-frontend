@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+.container {
+  height: 100vh;
+  width: 100%;
+  background-color: #faf4d3;
+}
+
 .category {
   height: 16rem;
   width: 12rem;
@@ -19,6 +25,7 @@ code {
   color: white;
   padding: 2rem;
   text-align: center;
+  background-color: #004643;
   font-size: 1rem;
   line-height: normal;
   float: left;
@@ -26,8 +33,8 @@ code {
 
 .task {
   border: 1px dashed gray;
-  background-color: #ddd;
-  color: black;
+  background-color: #faf4d3;
+  color: #0c1618;
   padding: .5rem;
   margin: .5rem;
   cursor: move;

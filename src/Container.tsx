@@ -31,20 +31,18 @@ const Container: FC = () => {
 
   const moveTask: MoveTask = (taskName, origin, destination) => {
     setState(function(previousState: ContainerState): ContainerState {
-      console.log('previousState', previousState)
       const newState = {
         ...previousState,
         [origin]: previousState[origin].filter(task => task !== taskName),
         [destination]: previousState[destination].concat(taskName)
       }
-      console.log('newState', newState)
       return newState
     })
   }
 
 
   return (
-    <div>
+    <div className='container'>
       {keys(state).map(category =>
         <Category name={category} key={category}>
           {state[category].map(task =>

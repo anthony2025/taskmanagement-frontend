@@ -19,7 +19,7 @@ const Category: FC<CategoryProps> = ({ name, children }) => {
   }))
 
   const isActive = canDrop && isOver
-  let backgroundColor = isActive ? 'darkgreen' : 'darkkhaki'
+  let backgroundColor = isActive ? 'maroon': '#004643'
 
   return (
     <div
