@@ -45,7 +45,7 @@ const Container: FC = () => {
     <div className='container'>
       {categories.map(category =>
         <Category name={category} key={category}>
-          {tasks.map(task =>
+          {tasks.filter(task => task.category === category).map(task =>
             <TaskComponent
               id={task.id}
               description={task.description}
