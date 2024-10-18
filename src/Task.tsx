@@ -1,29 +1,30 @@
 import type { FC } from 'react'
 import { useDrag } from 'react-dnd'
 
-import type { MoveTask, ContainerState } from './Container'
+import type { MoveTask } from './Container'
 
-export type TaskProps = {
-  name: string,
-  category: keyof ContainerState,
+export type TaskComponentProps = {
+  id: string,
+  description: string,
+  category: string,
   moveTask: MoveTask,
 }
 
 type DropResult = {
-  name: keyof ContainerState
+  taskId: string,
 }
 
-const Task: FC<TaskProps> = ({ name, category, moveTask }) => {
+export const TaskComponent: FC<TaskComponentProps> = ({ id, description, category, moveTask }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'task',
-    item: { name },
+    item: { id },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>()
       if (item && dropResult) {
-        const task = item.name
+        const taskId = item.id
         const origin = category
-        const destination = dropResult.name
-        moveTask(task, origin, destination)
+        const destination = dropResult.taskId
+        moveTask(taskId, origin, destination)
       }
     },
     collect: (monitor) => ({
@@ -41,9 +42,8 @@ const Task: FC<TaskProps> = ({ name, category, moveTask }) => {
       style={{ opacity }}
       data-testid='box'
     >
-      {name}
+      {description}
     </div>
   )
 }
 
-export default Task

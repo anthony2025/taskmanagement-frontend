@@ -2,10 +2,8 @@ import type { FC, ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
 import { toUpper } from 'ramda'
 
-import type { ContainerState } from './Container'
-
 export type CategoryProps = {
-  name: keyof ContainerState,
+  name: string,
   children: ReactNode,
 }
 

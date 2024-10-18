@@ -1,57 +1,57 @@
 import type { FC } from 'react'
 import { useState } from 'react'
-import { keys } from 'ramda'
 
 import Category from './Category'
-import Task from './Task'
+import { TaskComponent } from './Task'
 
-export type Categories = 'inbox' | 'work' | 'study'
-export type ContainerState = Record<Categories, string[]>
+import type { Task } from './types'
+import tasks from './tasks'
 
-const initialState: ContainerState = {
-  inbox: [
-    "Take out the garbage",
-    "Read a book",
-    "Cook lunch",
-    "Find a date",
-    "Finish report",
-  ],
-  work: [],
-  study: [],
+export type ContainerState = {
+  tasks: Task[]
 }
 
+const initialState: ContainerState = { tasks }
+
 export type MoveTask = (
-    taskName: string,
-    category: keyof ContainerState,
-    destination: keyof ContainerState
+    taskId: string,
+    category: string,
+    destination: string
   ) => void
 
 const Container: FC = () => {
   const [state, setState] = useState<ContainerState>(initialState)
 
-  const moveTask: MoveTask = (taskName, origin, destination) => {
+  const moveTask: MoveTask = (taskId, origin, destination) => {
     setState((previousState: ContainerState): ContainerState => {
       if (origin === destination) return previousState
-      const newState = {
-        ...previousState,
-        [origin]: previousState[origin].filter(task => task !== taskName),
-        [destination]: previousState[destination].concat(taskName)
-      }
-      return newState
+      console.log('taskId', taskId)
+      console.log('origin', origin)
+      console.log('destination', destination)
+      //const newState = {
+       // ...previousState,
+        //[origin]: previousState[origin].filter(task => task !== taskName),
+        //[destination]: previousState[destination].concat(taskName)
+      //}
+      return previousState
     })
   }
+
+  const categories = ['inbox', 'work', 'study']
+  const tasks: Task[] = state.tasks
 
 
   return (
     <div className='container'>
-      {keys(state).map(category =>
+      {categories.map(category =>
         <Category name={category} key={category}>
-          {state[category].map(task =>
-            <Task
-              name={task}
+          {tasks.map(task =>
+            <TaskComponent
+              id={task.id}
+              description={task.description}
               category={category}
               moveTask={moveTask}
-              key={task}
+              key={task.id}
               data-testid='task'
             />
           )}
