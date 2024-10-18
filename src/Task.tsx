@@ -11,7 +11,7 @@ export type TaskComponentProps = {
 }
 
 type DropResult = {
-  taskId: string,
+  name: string,
 }
 
 export const TaskComponent: FC<TaskComponentProps> = ({ id, description, category, moveTask }) => {
@@ -23,7 +23,7 @@ export const TaskComponent: FC<TaskComponentProps> = ({ id, description, categor
       if (item && dropResult) {
         const taskId = item.id
         const origin = category
-        const destination = dropResult.taskId
+        const destination = dropResult.name
         moveTask(taskId, origin, destination)
       }
     },
