@@ -1,8 +1,9 @@
 import type { FC } from 'react'
 import { useState } from 'react'
+import { findIndex, clone } from 'ramda'
 
 import Category from './Category'
-import { TaskComponent } from './Task'
+import { TaskComponent } from './TaskComponent'
 
 import type { Task } from './types'
 import tasks from './tasks'
@@ -25,15 +26,12 @@ const Container: FC = () => {
   const moveTask: MoveTask = (taskId, origin, destination) => {
     setState((previousState: ContainerState): ContainerState => {
       if (origin === destination) return previousState
-      console.log('taskId', taskId)
-      console.log('origin', origin)
-      console.log('destination', destination)
-      //const newState = {
-       // ...previousState,
-        //[origin]: previousState[origin].filter(task => task !== taskName),
-        //[destination]: previousState[destination].concat(taskName)
-      //}
-      return previousState
+      let tasks: Task[] = clone(previousState.tasks)
+      // @ts-ignore task is of unknown type, but we know its always Task
+      const taskIndex = findIndex(task => task.id === taskId)(tasks)
+      tasks[taskIndex].category = destination
+      const newState = { tasks }
+      return newState
     })
   }
 
