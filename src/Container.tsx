@@ -26,9 +26,8 @@ const Container: FC = () => {
   const moveTask: MoveTask = (taskId, origin, destination) => {
     setState((previousState: ContainerState): ContainerState => {
       if (origin === destination) return previousState
-      let tasks: Task[] = clone(previousState.tasks)
-      // @ts-ignore task is of unknown type, but we know its always Task
-      const taskIndex = findIndex(task => task.id === taskId)(tasks)
+      let tasks = clone(previousState.tasks)
+      const taskIndex = findIndex(task => (task as Task).id === taskId)(tasks)
       tasks[taskIndex].category = destination
       const newState = { tasks }
       return newState
