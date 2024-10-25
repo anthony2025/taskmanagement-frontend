@@ -1,18 +1,20 @@
 import type { FC } from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { findIndex, clone } from 'ramda'
 
 import Category from './Category'
 import { TaskComponent } from './TaskComponent'
 
 import type { Task } from './types'
-import tasks from './tasks'
+import { mockTasks, tasksUrl, categoryChangeUrl } from './constants'
 
 export type ContainerState = {
   tasks: Task[]
 }
 
-const initialState: ContainerState = { tasks }
+const initialState: ContainerState = {
+  tasks: mockTasks
+}
 
 export type MoveTask = (
     taskId: string,
@@ -23,6 +25,30 @@ export type MoveTask = (
 const Container: FC = () => {
   const [state, setState] = useState<ContainerState>(initialState)
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(tasksUrl, {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+        })
+        const tasks = await response.json()
+        // setState({ tasks })
+        console.log(tasks)
+      } catch (error) {
+        console.warn('API error', error)
+      }
+    }
+    fetchData();
+  }, [])
+
   const moveTask: MoveTask = (taskId, origin, destination) => {
     setState((previousState: ContainerState): ContainerState => {
       if (origin === destination) return previousState
@@ -30,13 +56,32 @@ const Container: FC = () => {
       const taskIndex = findIndex(task => (task as Task).id === taskId)(tasks)
       tasks[taskIndex].category = destination
       const newState = { tasks }
+      const changeCategoryOnServer = async () => {
+        try {
+          const url = `${categoryChangeUrl}/${destination}/taskId`
+          await fetch(url, {
+            method: 'PATCH',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+          })
+          console.log("changed category")
+        } catch (error) {
+          console.warn('API error', error)
+        }
+      }
+      changeCategoryOnServer()
       return newState
     })
   }
 
   const categories = ['inbox', 'work', 'study']
   const tasks: Task[] = state.tasks
-
 
   return (
     <div className='container'>
