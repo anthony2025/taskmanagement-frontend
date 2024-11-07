@@ -6,7 +6,7 @@ import Category from './Category'
 import { TaskComponent } from './TaskComponent'
 
 import type { Task } from './types'
-import { tasksUrl, categoryChangeUrl } from './constants'
+import { tasksUrl } from './constants'
 
 export type ContainerState = {
   tasks: Task[]
@@ -56,7 +56,7 @@ const Container: FC = () => {
       const newState = { tasks }
       const changeCategoryOnServer = async () => {
         try {
-          const url = `${categoryChangeUrl}/${destination}/taskId`
+          const url = `${tasksUrl}/taskId/category/categoryId`
           await fetch(url, {
             method: 'PATCH',
             mode: 'cors',

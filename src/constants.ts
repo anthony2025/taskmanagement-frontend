@@ -1,5 +1,4 @@
 export const tasksUrl = "https://app-taskmanagement-sandropucp-dev.azurewebsites.net/tasks"
-export const categoryChangeUrl = "https://app-taskmanagement-sandropucp-dev.azurewebsites.net/categories"
 
 export const corsHeaders = {
   mode: 'cors',
@@ -16,27 +15,27 @@ export const mockTasks = [
   {
     id: '0001',
     description: 'Take out the garbage',
-    category: 'inbox',
+    categoryName: 'inbox',
   },
   {
     id: '0002',
     description: 'Finish report',
-    category: 'inbox',
+    categoryName: 'inbox',
   },
   {
     id: '0003',
     description: 'Find a date',
-    category: 'inbox',
+    categoryName: 'inbox',
   },
   {
     id: '0004',
     description: 'Cook lunch',
-    category: 'inbox',
+    categoryName: 'inbox',
   },
   {
     id: '0005',
     description: 'Read a book',
-    category: 'inbox',
+    categoryName: 'inbox',
   },
 ]
 
