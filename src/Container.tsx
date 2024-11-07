@@ -6,14 +6,14 @@ import Category from './Category'
 import { TaskComponent } from './TaskComponent'
 
 import type { Task } from './types'
-import { mockTasks, tasksUrl, categoryChangeUrl } from './constants'
+import { tasksUrl, categoryChangeUrl } from './constants'
 
 export type ContainerState = {
   tasks: Task[]
 }
 
 const initialState: ContainerState = {
-  tasks: mockTasks
+  tasks: []
 }
 
 export type MoveTask = (
@@ -34,13 +34,11 @@ const Container: FC = () => {
           cache: 'no-cache',
           credentials: 'same-origin',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          redirect: 'follow',
-          referrerPolicy: 'no-referrer',
         })
         const tasks = await response.json()
-        // setState({ tasks })
+        setState({ tasks })
         console.log(tasks)
       } catch (error) {
         console.warn('API error', error)
@@ -54,7 +52,7 @@ const Container: FC = () => {
       if (origin === destination) return previousState
       let tasks = clone(previousState.tasks)
       const taskIndex = findIndex(task => (task as Task).id === taskId)(tasks)
-      tasks[taskIndex].category = destination
+      tasks[taskIndex].categoryName = destination
       const newState = { tasks }
       const changeCategoryOnServer = async () => {
         try {
@@ -65,7 +63,7 @@ const Container: FC = () => {
             cache: 'no-cache',
             credentials: 'same-origin',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
             redirect: 'follow',
             referrerPolicy: 'no-referrer',
@@ -87,7 +85,7 @@ const Container: FC = () => {
     <div className='container'>
       {categories.map(category =>
         <Category name={category} key={category}>
-          {tasks.filter(task => task.category === category).map(task =>
+          {tasks.filter(task => task.categoryName === category).map(task =>
             <TaskComponent
               id={task.id}
               description={task.description}
