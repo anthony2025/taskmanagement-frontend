@@ -2,12 +2,12 @@ import type { FC, ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
 import { toUpper } from 'ramda'
 
-export type CategoryProps = {
+export type CategoryComponentProps = {
   name: string,
   children: ReactNode,
 }
 
-const Category: FC<CategoryProps> = ({ name, children }) => {
+export const CategoryComponent: FC<CategoryComponentProps> = ({ name, children }) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'task',
     drop: () => ({ name }),
@@ -35,4 +35,3 @@ const Category: FC<CategoryProps> = ({ name, children }) => {
   )
 }
 
-export default Category

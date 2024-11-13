@@ -4,3 +4,7 @@ export type Task = {
   categoryName: string,
 }
 
+export type Category = {
+  id: string,
+  name: string
+}

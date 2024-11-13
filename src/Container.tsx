@@ -2,18 +2,20 @@ import type { FC } from 'react'
 import { useState, useEffect } from 'react'
 import { findIndex, clone } from 'ramda'
 
-import Category from './Category'
+import { CategoryComponent } from './CategoryComponent'
 import { TaskComponent } from './TaskComponent'
 
-import type { Task } from './types'
-import { tasksUrl } from './constants'
+import type { Task, Category } from './types'
+import { baseUrl } from './constants'
 
 export type ContainerState = {
-  tasks: Task[]
+  tasks: Task[],
+  categories: any[]
 }
 
 const initialState: ContainerState = {
-  tasks: []
+  tasks: [],
+  categories: [],
 }
 
 export type MoveTask = (
@@ -28,7 +30,7 @@ const Container: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(tasksUrl, {
+        const tasksResponse = await fetch(`${baseUrl}/tasks`, {
           method: 'GET',
           mode: 'cors',
           cache: 'no-cache',
@@ -37,8 +39,18 @@ const Container: FC = () => {
             'Content-Type': 'application/json',
           },
         })
-        const tasks = await response.json()
-        setState({ tasks })
+        const categoriesResponse = await fetch(`${baseUrl}/categories`, {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        const tasks: Task[] = await tasksResponse.json()
+        const categories: Category[] = await categoriesResponse.json()
+        setState({ tasks, categories })
         console.log(tasks)
       } catch (error) {
         console.warn('API error', error)
@@ -53,10 +65,10 @@ const Container: FC = () => {
       let tasks = clone(previousState.tasks)
       const taskIndex = findIndex(task => (task as Task).id === taskId)(tasks)
       tasks[taskIndex].categoryName = destination
-      const newState = { tasks }
+      const newState = { categories: previousState.categories, tasks }
       const changeCategoryOnServer = async () => {
         try {
-          const url = `${tasksUrl}/${taskId}/category/categoryId`
+          const url = `${baseUrl}/${taskId}/category/categoryId`
           await fetch(url, {
             method: 'PATCH',
             mode: 'cors',
@@ -84,7 +96,7 @@ const Container: FC = () => {
   return (
     <div className='container'>
       {categories.map(category =>
-        <Category name={category} key={category}>
+        <CategoryComponent name={category} key={category}>
           {tasks.filter(task => task.categoryName === category).map(task =>
             <TaskComponent
               id={task.id}
@@ -95,7 +107,7 @@ const Container: FC = () => {
               data-testid='task'
             />
           )}
-        </Category>
+        </CategoryComponent>
       )}
     </div>
   )

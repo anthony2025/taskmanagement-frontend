@@ -1,4 +1,4 @@
-export const tasksUrl = "https://app-taskmanagement-sandropucp-dev.azurewebsites.net/tasks"
+export const baseUrl = "https://app-taskmanagement-sandropucp-dev.azurewebsites.net"
 
 export const corsHeaders = {
   mode: 'cors',
