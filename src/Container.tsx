@@ -56,7 +56,7 @@ const Container: FC = () => {
       const newState = { tasks }
       const changeCategoryOnServer = async () => {
         try {
-          const url = `${tasksUrl}/taskId/category/categoryId`
+          const url = `${tasksUrl}/${taskId}/category/categoryId`
           await fetch(url, {
             method: 'PATCH',
             mode: 'cors',
@@ -89,7 +89,7 @@ const Container: FC = () => {
             <TaskComponent
               id={task.id}
               description={task.description}
-              category={category}
+              categoryName={category}
               moveTask={moveTask}
               key={task.id}
               data-testid='task'

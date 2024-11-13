@@ -6,7 +6,7 @@ import type { MoveTask } from './Container'
 export type TaskComponentProps = {
   id: string,
   description: string,
-  category: string,
+  categoryName: string,
   moveTask: MoveTask,
 }
 
@@ -14,7 +14,7 @@ type DropResult = {
   name: string, // the destination category
 }
 
-export const TaskComponent: FC<TaskComponentProps> = ({ id, description, category, moveTask }) => {
+export const TaskComponent: FC<TaskComponentProps> = ({ id, description, categoryName, moveTask }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'task',
     item: { id },
@@ -22,7 +22,7 @@ export const TaskComponent: FC<TaskComponentProps> = ({ id, description, categor
       const dropResult = monitor.getDropResult<DropResult>()
       if (item && dropResult) {
         const taskId = item.id
-        const origin = category
+        const origin = categoryName
         const destination = dropResult.name
         moveTask(taskId, origin, destination)
       }
